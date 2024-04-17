@@ -113,3 +113,34 @@ body {
 .checkbox label {
   cursor: pointer;
 }
+
+.list-style-none {
+  list-style-type: none;
+  list-style: none;
+  padding-left: 0;
+}
+
+.list-style-none > li > a {
+  color: rgb(0, 140, 255);
+  text-decoration: none;
+}
+.list-style-none > li > a:hover {
+  text-decoration: underline;
+}
+
+.buttons-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.delete {
+  background-color: rgb(211, 211, 211);
+}
+
+.delete:hover {
+  background-color: rgb(212, 164, 164);
+  outline: 1px solid rgb(209, 155, 155);
+  outline-offset: 2px;
+}

@@ -1,3 +1,5 @@
+const Category = require('../models/category');
+
 const asynchandler = require('express-async-handler');
 
 //CREATE
@@ -11,7 +13,11 @@ exports.category_create_post = asynchandler(async (req, res) => {
 
 //READ
 exports.category_list = asynchandler(async (req, res) => {
-  res.send('NOT IMPLEMENTED: Category List');
+  const allCategory = await Category.find().exec();
+  res.render('category_list', {
+    title: 'List of categories',
+    category_list: allCategory,
+  });
 });
 
 //UPDATE

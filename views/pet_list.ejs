@@ -1,0 +1,43 @@
+<div class="grid-container">
+  <aside class="side-bar">
+    <div>
+      <h2>View All</h2>
+      <ul class="list-style-none sidebar-font-color">
+        <li><a href="/inventory">Items</a></li>
+        <li><a href="/inventory/pets">Pets</a></li>
+        <li><a href="/inventory/categories">Categories</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Create</h2>
+      <ul class="list-style-none">
+        <li><a href="/inventory/item/create">New Item</a></li>
+        <li><a href="/inventory/pet/create">New Pet</a></li>
+        <li><a href="/inventory/category/create">New Category</a></li>
+      </ul>
+    </div>
+  </aside>
+  <div>
+    <h1 class="title"><%=title%></h1>
+    <div>
+      <ul class="item-list">
+        <% if(typeof pet_list !== 'undefined' ){ for(let pet of pet_list) { %>
+        <li>
+          <a href="/inventory/pet/<%=pet._id%>">
+            <div class="card">
+              <figure>
+                <img src="../images/blank_image.png" />
+              </figure>
+              <div class="card-body">
+                <h3 class="card-title"><%= pet.name %></h3>
+              </div>
+            </div>
+          </a>
+        </li>
+        <% }} else {%>
+        <h2>No pets found.</h2>
+        <%}%>
+      </ul>
+    </div>
+  </div>
+</div>

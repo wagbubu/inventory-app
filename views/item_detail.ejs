@@ -6,11 +6,21 @@
     <h1><%=item.name%></h1>
     <p><%=item.description%></p>
     <div>
-      <p><strong>Price: <%=item.price%></strong></p>
-      <p><strong>Quantity: <%=item.number_in_stock%></strong></p>
+      <p><strong>Price: ₱<%=item.price%></strong></p>
+      <p><strong>In Stock: <%=item.number_in_stock%> pcs.</strong></p>
     </div>
-    <a href="/inventory/item/<%=item._id%>/update" class="btn btn-link"
-      >Update Product</a
-    >
+    <div class="buttons-container">
+      <p>
+        <a href="/inventory/item/<%=item._id%>/update" class="btn"
+          >Update Product</a
+        >
+      </p>
+
+      <p>
+        <a href="/inventory/item/<%=item._id%>/delete" class="btn delete"
+          >Delete Product</a
+        >
+      </p>
+    </div>
   </div>
 </div>

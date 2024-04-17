@@ -1,4 +1,5 @@
 const asynchandler = require('express-async-handler');
+const Pet = require('../models/pet');
 
 //CREATE
 exports.pet_create_get = asynchandler(async (req, res) => {
@@ -12,7 +13,11 @@ exports.pet_create_post = asynchandler(async (req, res) => {
 //READ
 
 exports.pet_list = asynchandler(async (req, res) => {
-  res.send('NOT IMPLEMENTED: Pet List');
+  const allPets = await Pet.find().exec();
+  res.render('pet_list', {
+    title: 'List of Pets',
+    pet_list: allPets,
+  });
 });
 
 //UPDATE
