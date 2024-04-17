@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Inventory App | Home</title>
+  </head>
+  <body>
+    <div class="grid-container"  style="background-color: burlywood">
+      <aside class="side-bar">
+        <h2>Filter</h2>
+        <form>
+          <section>
+            <h3>Pets</h3>
+            <ul
+              style="list-style-type: none; list-style: none; padding-left: 0"
+            >
+              <li>
+                <input type="radio" name="pet" id="dog" value="dog-id" />
+                <label for="dog">Dog</label>
+              </li>
+              <li>
+                <input type="radio" name="pet" id="cat" value="cat-id" />
+                <label for="cat">Cat</label>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Categories</h3>
+            <ul
+              style="list-style-type: none; list-style: none; padding-left: 0"
+            >
+              <li>
+                <input
+                  type="checkbox"
+                  name="category"
+                  id="dry"
+                  value="dry-id"
+                />
+                <label for="dry">Dry</label>
+              </li>
+              <li>
+                <input
+                  type="checkbox"
+                  name="category"
+                  id="wet"
+                  value="wet-id"
+                />
+                <label for="wet">Wet</label>
+              </li>
+            </ul>
+          </section>
+          <button type="submit">Filter</button>
+        </form>
+      </aside>
+      <div>
+        <h1 class="title">Items</h1>
+        <div>
+          <ul>
+            <li><a href="">Whiskas</a></li>
+            <li><a href="">Powerdog</a></li>
+            <li><a href="">Powercat</a></li>
+            <li><a href="">Pedegree</a></li>
+            <li><a href="">Generic</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

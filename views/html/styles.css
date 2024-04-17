@@ -1,0 +1,14 @@
+.title {
+  background-color: bisque;
+}
+
+.side-bar {
+  background-color: blue;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 22% auto;
+  padding: 2rem;
+  gap: 2rem;
+}

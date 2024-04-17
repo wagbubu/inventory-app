@@ -1,0 +1,115 @@
+* {
+  box-sizing: border-box;
+  font-family: Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  background-color: #f0f2f5;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  max-width: 1000px;
+  margin: auto;
+  padding: 1rem;
+  gap: 1rem;
+}
+.side-bar {
+  border-right: 1px solid gainsboro;
+}
+
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style-type: none;
+  padding: 0;
+}
+
+.btn {
+  background-color: rgb(0, 140, 255);
+  padding: 0.7rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover {
+  outline: 1px solid rgb(0, 140, 255);
+  outline-offset: 2px;
+}
+
+.item-list > li {
+  border-radius: 8px;
+  box-shadow: 0px 2px 3px gainsboro;
+  background-color: #ffffff;
+}
+
+.item-list a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  max-height: max-content;
+}
+.card figure {
+  height: 100%;
+  width: 100px;
+}
+.card img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.card-info p {
+  padding: 0px 3px 0px 3px;
+  font-size: 14px;
+  width: max-content;
+  outline: 1px solid rgb(182, 181, 181);
+  outline-offset: 3px;
+  border-radius: 100px 100px 100px 100px;
+}
+
+.item-detail {
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: auto;
+  margin-top: 40px;
+}
+.item-detail img {
+  max-width: 300px;
+  max-height: 300px;
+  box-shadow: 0px 2px 10px 5px gainsboro;
+}
+.item-detail figure {
+  display: flex;
+  justify-content: center;
+}
+
+.item-detail-content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.checkbox {
+  margin: 0.3rem 0 0.3rem 0;
+}
+
+.checkbox:hover {
+  color: rgb(0, 140, 255);
+}
+
+.checkbox label {
+  cursor: pointer;
+}

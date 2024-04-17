@@ -1,0 +1,58 @@
+<div class="grid-container">
+  <aside class="side-bar">
+    <h2>Filter</h2>
+    <form>
+      <section>
+        <h3>Pets</h3>
+        <ul style="list-style-type: none; list-style: none; padding-left: 0">
+          <% for(let pet of pets) { %>
+          <li class="checkbox">
+            <input <%=pet.checked && 'checked'%> type="checkbox" name="pet"
+            id="<%=pet.name%>" value="<%=pet._id%>" />
+            <label for="<%=pet.name%>"><%=pet.name%></label>
+          </li>
+          <% } %>
+        </ul>
+      </section>
+      <section>
+        <h3>Categories</h3>
+        <ul style="list-style-type: none; list-style: none; padding-left: 0">
+          <% for(let category of categories) {%>
+          <li class="checkbox">
+            <input <%=category.checked && 'checked'%> type="checkbox"
+            name="category" id="<%=category.nameSlug%>" value="<%=category._id
+            %>" />
+            <label for="<%=category.nameSlug%>"><%=category.name%></label>
+          </li>
+          <% } %>
+        </ul>
+      </section>
+      <button type="submit" class="btn">Filter</button>
+    </form>
+  </aside>
+  <div>
+    <h1 class="title"><%=title%></h1>
+    <div>
+      <ul class="item-list">
+        <% for(let item of item_list) { %>
+        <li>
+          <a href="/inventory/item/<%=item._id%>">
+            <div class="card">
+              <figure>
+                <img src="../images/blank_image.png" />
+              </figure>
+              <div class="card-body">
+                <h3 class="card-title"><%= item.name %></h3>
+                <div class="card-info">
+                  <p>Quantity: x<%=item.number_in_stock%></p>
+                  <p>Price: ₱<%=item.price%></p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</div>

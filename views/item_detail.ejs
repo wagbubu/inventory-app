@@ -1,0 +1,16 @@
+<div class="item-detail">
+  <figure>
+    <img src="/images/blank_image.png" />
+  </figure>
+  <div class="item-detail-content">
+    <h1><%=item.name%></h1>
+    <p><%=item.description%></p>
+    <div>
+      <p><strong>Price: <%=item.price%></strong></p>
+      <p><strong>Quantity: <%=item.number_in_stock%></strong></p>
+    </div>
+    <a href="/inventory/item/<%=item._id%>/update" class="btn btn-link"
+      >Update Product</a
+    >
+  </div>
+</div>
