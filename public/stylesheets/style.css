@@ -144,3 +144,42 @@ body {
   outline: 1px solid rgb(209, 155, 155);
   outline-offset: 2px;
 }
+
+.form-container form input,
+.form-container form textarea {
+  margin-bottom: 1.5rem;
+  margin-top: 5px;
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.form-container form input {
+  height: 2.5rem;
+}
+.form-container form input:focus,
+.form-container form textarea:focus,
+.form-container form select:focus {
+  outline: 2px solid rgb(0, 140, 255);
+  outline-offset: 1px;
+}
+
+.form-container textarea {
+  height: 6rem;
+}
+
+.form-container select {
+  height: 2.5rem;
+  border-right: 16px solid transparent;
+  border-top: 0px;
+  border-bottom: 0px;
+  border-left: 0px;
+  background-color: #ffffff;
+  margin-bottom: 1.5rem;
+  margin-top: 5px;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: 1px solid gainsboro;
+  outline-offset: 1px;
+  padding-left: 1rem;
+}

@@ -11,6 +11,60 @@
     <% } %>
   </head>
   <body>
-    <%- body %>
+    <div class="grid-container">
+      <aside class="side-bar">
+        <% if(typeof pets !== 'undefined' || typeof categories !== 'undefined')
+        {%>
+        <div>
+          <h2>Filter</h2>
+          <form>
+            <section>
+              <h3>Pets</h3>
+              <ul class="list-style-none">
+                <% for(let pet of pets) { %>
+                <li class="checkbox">
+                  <input <%=pet.checked && 'checked'%> type="checkbox"
+                  name="pet" id="<%=pet.name%>" value="<%=pet._id%>" />
+                  <label for="<%=pet.name%>"><%=pet.name%></label>
+                </li>
+                <% } %>
+              </ul>
+            </section>
+            <section>
+              <h3>Categories</h3>
+              <ul class="list-style-none">
+                <% for(let category of categories) {%>
+                <li class="checkbox">
+                  <input <%=category.checked && 'checked'%> type="checkbox"
+                  name="category" id="<%=category.nameSlug%>"
+                  value="<%=category._id %>" />
+                  <label for="<%=category.nameSlug%>"><%=category.name%></label>
+                </li>
+                <% } %>
+              </ul>
+            </section>
+            <button type="submit" class="btn">Filter</button>
+          </form>
+        </div>
+        <% } %>
+        <div>
+          <h2>View All</h2>
+          <ul class="list-style-none sidebar-font-color">
+            <li><a href="/inventory">Items</a></li>
+            <li><a href="/inventory/pets">Pets</a></li>
+            <li><a href="/inventory/categories">Categories</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Create</h2>
+          <ul class="list-style-none">
+            <li><a href="/inventory/item/create">New Item</a></li>
+            <li><a href="/inventory/pet/create">New Pet</a></li>
+            <li><a href="/inventory/category/create">New Category</a></li>
+          </ul>
+        </div>
+      </aside>
+      <%- body %>
+    </div>
   </body>
 </html>

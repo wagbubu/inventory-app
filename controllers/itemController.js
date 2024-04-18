@@ -4,9 +4,18 @@ const Pet = require('../models/pet');
 const Category = require('../models/category');
 
 //CREATE
-exports.item_create_get = asynchandler(async (req, res) => {
-  res.send('NOT IMPLEMENTED: Item Create Get');
-});
+exports.item_create_get = [
+  asynchandler(async (req, res) => {
+    const allPets = await Pet.find().exec();
+    const allCategory = await Category.find().exec();
+
+    res.render('item_form', {
+      title: 'Create new Item',
+      categories: allCategory,
+      pets: allPets,
+    });
+  }),
+];
 
 exports.item_create_post = asynchandler(async (req, res) => {
   res.send('NOT IMPLEMENTED: Item Create Post');
