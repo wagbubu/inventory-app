@@ -1,7 +1,9 @@
 <div class="form-container">
-  <form style="display: flex; flex-direction: column">
+  <h1><%=title%></h1>
+  <form method="POST" style="display: flex; flex-direction: column">
     <label for="name">Name</label>
     <input
+      required
       name="name"
       placeholder="Enter name of product"
       id="name"
@@ -10,7 +12,7 @@
     <label for="description">Description</label>
     <textarea id="description" name="description"></textarea>
     <label for="category">Category</label>
-    <select name="category" id="category">
+    <select required name="category" id="category">
       <option selected disabled value="">-- Select Category --</option>
       <% if( typeof categories !== 'undefined') { for(let category of
       categories) { %>
@@ -18,16 +20,17 @@
       <%}}%>
     </select>
     <label for="pet">Pet</label>
-    <select name="pet" id="pet">
+    <select required name="pet" id="pet">
       <option selected disabled value="">-- Select Pet --</option>
       <% if( typeof pets !== 'undefined') { for(let pet of pets) { %>
       <option value="<%=pet._id%>"><%= pet.name %></option>
       <%}}%>
     </select>
     <label for="number_in_stock">Quantity</label>
-    <input name="number_in_stock" id="number_in_stock" type="number" />
+    <input required name="number_in_stock" id="number_in_stock" type="number" />
     <label for="price">Price</label>
     <input
+      required
       placeholder="Enter price of each product"
       name="price"
       id="price"

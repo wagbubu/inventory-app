@@ -1,15 +1,44 @@
 const Category = require('../models/category');
-
+const { body, validationResult } = require('express-validator');
 const asynchandler = require('express-async-handler');
 
 //CREATE
 exports.category_create_get = asynchandler(async (req, res) => {
-  res.send('NOT IMPLEMENTED: Category List');
+  res.render('category_form', {
+    title: 'Add new category',
+  });
 });
 
-exports.category_create_post = asynchandler(async (req, res) => {
-  res.send('NOT IMPLEMENTED: Category List');
-});
+exports.category_create_post = [
+  body('name', 'Category name most contain atleast 3 characters')
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  asynchandler(async (req, res) => {
+    const errors = validationResult(req);
+
+    const category = new Category({ name: req.body.name });
+
+    if (!errors.isEmpty()) {
+      res.render('category_form', {
+        title: 'Add new category',
+        category: category,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      const categoryExists = await Category.findOne({
+        name: req.body.name,
+      }).exec();
+      if (categoryExists) {
+        res.redirect('/inventory/categories');
+      } else {
+        await category.save();
+        res.redirect('/inventory/categories');
+      }
+    }
+  }),
+];
 
 //READ
 exports.category_list = asynchandler(async (req, res) => {

@@ -2,24 +2,79 @@ const asynchandler = require('express-async-handler');
 const Item = require('../models/item');
 const Pet = require('../models/pet');
 const Category = require('../models/category');
+const { body, validationResult } = require('express-validator');
 
 //CREATE
-exports.item_create_get = [
-  asynchandler(async (req, res) => {
-    const allPets = await Pet.find().exec();
-    const allCategory = await Category.find().exec();
+exports.item_create_get = asynchandler(async (req, res) => {
+  const allPets = await Pet.find().exec();
+  const allCategory = await Category.find().exec();
 
-    res.render('item_form', {
-      title: 'Create new Item',
-      categories: allCategory,
-      pets: allPets,
+  res.render('item_form', {
+    title: 'Add new item',
+    categories: allCategory,
+    pets: allPets,
+  });
+});
+
+exports.item_create_post = [
+  body('name', 'Name must contain atleast 2 characters')
+    .trim()
+    .isLength({ min: 2 })
+    .escape(),
+  body('description').trim().isLength({ min: 1 }).escape(),
+  body('category').trim().isLength({ min: 1 }).escape(),
+  body('pet').trim().isLength({ min: 1 }).escape(),
+  body('price')
+    .trim()
+    .custom((value) => {
+      if (Number(value) < 0) {
+        throw new Error('Value must be greater than zero');
+      }
+      return true;
+    })
+    .escape(),
+  body('number_in_stock')
+    .trim()
+    .custom((value) => {
+      if (Number(value) < 0) {
+        throw new Error('Value must be greater than zero');
+      }
+      return true;
+    })
+    .escape(),
+
+  asynchandler(async (req, res) => {
+    const errors = validationResult(req);
+
+    const item = new Item({
+      name: req.body.name,
+      description: req.body.description,
+      category: req.body.category,
+      price: Number(req.body.price),
+      number_in_stock: Number(req.body.number_in_stock),
+      pet: req.body.pet,
     });
+
+    if (!errors.isEmpty()) {
+      const [allPets, allCategory] = await Promise.all([
+        Pet.find().exec(),
+        Category.find().exec(),
+      ]);
+
+      res.render('item_form', {
+        title: 'Add new Item',
+        item: item,
+        pets: allPets,
+        categories: allCategory,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      await item.save();
+      res.redirect(item.url);
+    }
   }),
 ];
-
-exports.item_create_post = asynchandler(async (req, res) => {
-  res.send('NOT IMPLEMENTED: Item Create Post');
-});
 
 exports.item_detail = asynchandler(async (req, res) => {
   const itemDetail = await Item.findById(req.params.id).exec();

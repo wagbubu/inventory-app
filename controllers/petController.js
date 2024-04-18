@@ -1,14 +1,42 @@
 const asynchandler = require('express-async-handler');
 const Pet = require('../models/pet');
+const { body, validationResult } = require('express-validator');
 
 //CREATE
 exports.pet_create_get = asynchandler(async (req, res) => {
-  res.send('NOT IMPLEMENTED: Pet Create Get');
+  res.render('pet_form', {
+    title: 'Add new pet',
+  });
 });
 
-exports.pet_create_post = asynchandler(async (req, res) => {
-  res.send('NOT IMPLEMENTED: Pet Create Post');
-});
+exports.pet_create_post = [
+  body('name', 'Pet name most contain atleast 2 characters')
+    .trim()
+    .isLength({ min: 2 })
+    .escape(),
+  asynchandler(async (req, res) => {
+    const errors = validationResult(req);
+
+    const pet = new Pet({ name: req.body.name });
+
+    if (!errors.isEmpty()) {
+      res.render('pet_form', {
+        title: 'Add new pet',
+        pet: pet,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      const petExists = await Pet.findOne({ name: req.body.name }).exec();
+      if (petExists) {
+        res.redirect('/inventory/pets');
+      } else {
+        await pet.save();
+        res.redirect('/inventory/pets');
+      }
+    }
+  }),
+];
 
 //READ
 

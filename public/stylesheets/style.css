@@ -156,6 +156,7 @@ body {
 
 .form-container form input {
   height: 2.5rem;
+  padding-left: 0.8rem;
 }
 .form-container form input:focus,
 .form-container form textarea:focus,
@@ -181,5 +182,6 @@ body {
   font-size: 1rem;
   outline: 1px solid gainsboro;
   outline-offset: 1px;
-  padding-left: 1rem;
+  padding-left: 0.8rem;
+  cursor: pointer;
 }
