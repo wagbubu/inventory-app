@@ -50,7 +50,10 @@ exports.pet_list = asynchandler(async (req, res) => {
 
 //UPDATE
 exports.pet_update_get = asynchandler(async (req, res) => {
-  res.send(`NOT IMPLEMENTED: Pet Update GET ${req.params.id}`);
+  const pet = Pet.find({ _id: req.params.id });
+  res.render('pet_form', {
+    title: 'Update pet',
+  });
 });
 
 exports.pet_update_post = asynchandler(async (req, res) => {

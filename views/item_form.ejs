@@ -8,26 +8,40 @@
       placeholder="Enter name of product"
       id="name"
       type="text"
+      value="<%= typeof item !== 'undefined' ? item.name : null %>"
     />
     <label for="description">Description</label>
-    <textarea id="description" name="description"></textarea>
+    <textarea id="description" name="description">
+<%= typeof item !== 'undefined' ? item.description : null %></textarea
+    >
     <label for="category">Category</label>
     <select required name="category" id="category">
       <option selected disabled value="">-- Select Category --</option>
       <% if( typeof categories !== 'undefined') { for(let category of
-      categories) { %>
+      categories) { if(category.checked) { %>
+      <option value="<%=category._id%>" selected><%= category.name %></option>
+      <%} else { %>
       <option value="<%=category._id%>"><%= category.name %></option>
-      <%}}%>
+      <%}}}%>
     </select>
     <label for="pet">Pet</label>
     <select required name="pet" id="pet">
       <option selected disabled value="">-- Select Pet --</option>
-      <% if( typeof pets !== 'undefined') { for(let pet of pets) { %>
+      <% if( typeof pets !== 'undefined') { for(let pet of pets) {
+      if(pet.checked) {%>
+      <option value="<%=pet._id%>" selected><%= pet.name %></option>
+      <%} else { %>
       <option value="<%=pet._id%>"><%= pet.name %></option>
-      <%}}%>
+      <%}}}%>
     </select>
     <label for="number_in_stock">Quantity</label>
-    <input required name="number_in_stock" id="number_in_stock" type="number" />
+    <input
+      required
+      name="number_in_stock"
+      id="number_in_stock"
+      type="number"
+      value="<%= typeof item !== 'undefined' ? item.number_in_stock : null %>"
+    />
     <label for="price">Price</label>
     <input
       required
@@ -35,6 +49,7 @@
       name="price"
       id="price"
       type="number"
+      value="<%= typeof item !== 'undefined' ? item.price : null %>"
     />
     <button type="submit" class="btn">Save</button>
   </form>
