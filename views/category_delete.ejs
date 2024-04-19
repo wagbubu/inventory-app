@@ -1,0 +1,33 @@
+<div>
+  <h1><%= title %></h1>
+  <% if(item_list.length === 0) { %>
+  <h2>Are you sure do you want to delete "<%= category.name %>"</h2>
+  <form method="POST">
+    <input
+      type="hidden"
+      name="category"
+      id="category"
+      value="<%=category._id%>"
+    />
+    <button type="submit" class="btn delete">Confirm Delete</button>
+  </form>
+  <% } else { %>
+  <h2>Cannot Delete Category!</h2>
+  <p>
+    Please Delete the following associated Items before deleting
+    <%=category.name%>
+  </p>
+  <ul>
+    <% for(let item of item_list) { %>
+    <li>
+      <p>
+        <a href="/inventory/item/<%= item._id %>"><%= item.name %></a>
+      </p>
+    </li>
+    <% } %>
+  </ul>
+  <p style="margin-top: 5rem; font-size: 0.9rem">
+    <a href="/inventory/categories">&lt;&lt; Go Back </a>
+  </p>
+  <% } %>
+</div>

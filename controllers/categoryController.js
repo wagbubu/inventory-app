@@ -1,6 +1,7 @@
 const Category = require('../models/category');
 const { body, validationResult } = require('express-validator');
 const asynchandler = require('express-async-handler');
+const Item = require('../models/item');
 
 //CREATE
 exports.category_create_get = asynchandler(async (req, res) => {
@@ -52,18 +53,54 @@ exports.category_list = asynchandler(async (req, res) => {
 
 //UPDATE
 exports.category_update_get = asynchandler(async (req, res) => {
-  res.send(`NOT IMPLEMENTED: Category Update GET ${req.params.id}`);
+  const category = await Category.findById(req.params.id).exec();
+  res.render('category_form', {
+    title: 'Update category',
+    category: category,
+  });
 });
 
-exports.category_update_post = asynchandler(async (req, res) => {
-  res.send(`NOT IMPLEMENTED: Category Update POST ID: ${req.params.id}`);
-});
+exports.category_update_post = [
+  body('name', 'Category name must contain atleast 3 characters')
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  asynchandler(async (req, res) => {
+    const errors = validationResult(req);
+    const category = new Category({
+      _id: req.params.id,
+      name: req.body.name,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render('category_form', {
+        title: 'Update Category',
+        errors: errors.array(),
+        category: category,
+      });
+      return;
+    } else {
+      await Category.findByIdAndUpdate(req.params.id, category, {});
+      res.redirect('/inventory/categories');
+    }
+  }),
+];
 
 //DELETE
 exports.category_delete_get = asynchandler(async (req, res) => {
-  res.send(`NOT IMPLEMENTED: Category Delete GET ID: ${req.params.id}`);
+  const [allItems, category] = await Promise.all([
+    await Item.find({ category: req.params.id }),
+    await Category.findById(req.params.id),
+  ]);
+
+  res.render('category_delete', {
+    title: 'Delete category',
+    item_list: allItems,
+    category: category,
+  });
 });
 
 exports.category_delete_post = asynchandler(async (req, res) => {
-  res.send(`NOT IMPLEMENTED: Category Delete POST ID: ${req.params.id}`);
+  await Category.findByIdAndDelete(req.params.id).exec();
+  res.redirect('/inventory/categories');
 });

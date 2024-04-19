@@ -8,6 +8,7 @@
       placeholder="Enter name of category"
       id="name"
       type="text"
+      value="<%= typeof category !== 'undefined' ? category.name : '' %>"
     />
     <button type="submit" class="btn">Save</button>
   </form>

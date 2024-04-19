@@ -5,19 +5,29 @@
       <% if(typeof category_list !== 'undefined' ){ for(let category of
       category_list) { %>
       <li>
-        <a href="/inventory/category/<%=category._id%>">
-          <div class="card">
-            <figure>
-              <img src="../images/blank_image.png" />
-            </figure>
-            <div class="card-body">
-              <h3 class="card-title"><%= category.name %></h3>
+        <div class="card">
+          <figure>
+            <img src="../images/blank_image.png" />
+          </figure>
+          <div class="card-body">
+            <h3 class="card-title"><%= category.name %></h3>
+            <div class="card-link">
+              <p>
+                <a href="/inventory/category/<%= category._id %>/update"
+                  >Update</a
+                >
+              </p>
+              <p>
+                <a href="/inventory/category/<%= category._id %>/delete"
+                  >Delete</a
+                >
+              </p>
             </div>
           </div>
-        </a>
+        </div>
       </li>
       <% }} else {%>
-      <h3>No categories found.</h3>
+      <h2>No categories found.</h2>
       <%}%>
     </ul>
   </div>
