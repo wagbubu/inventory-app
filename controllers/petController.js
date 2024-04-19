@@ -45,6 +45,7 @@ exports.pet_list = asynchandler(async (req, res) => {
   const allPets = await Pet.find().exec();
   res.render('pet_list', {
     title: 'List of Pets',
+    page: 'Pets',
     pet_list: allPets,
   });
 });

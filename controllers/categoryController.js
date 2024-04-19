@@ -45,6 +45,7 @@ exports.category_list = asynchandler(async (req, res) => {
   const allCategory = await Category.find().exec();
   res.render('category_list', {
     title: 'List of categories',
+    page: 'Categories',
     category_list: allCategory,
   });
 });
