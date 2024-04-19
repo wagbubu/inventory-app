@@ -1,5 +1,6 @@
 const asynchandler = require('express-async-handler');
 const Pet = require('../models/pet');
+const Item = require('../models/item');
 const { body, validationResult } = require('express-validator');
 
 //CREATE
@@ -50,21 +51,48 @@ exports.pet_list = asynchandler(async (req, res) => {
 
 //UPDATE
 exports.pet_update_get = asynchandler(async (req, res) => {
-  const pet = Pet.find({ _id: req.params.id });
+  const pet = await Pet.findById(req.params.id).exec();
   res.render('pet_form', {
     title: 'Update pet',
+    pet: pet,
   });
 });
 
-exports.pet_update_post = asynchandler(async (req, res) => {
-  res.send(`NOT IMPLEMENTED: Pet Update POST ${req.params.id}`);
-});
+exports.pet_update_post = [
+  body('name', 'Pet must not be empty').trim().escape(),
+  asynchandler(async (req, res) => {
+    const errors = validationResult(req);
+    const pet = new Pet({
+      _id: req.params.id,
+      name: req.body.name,
+    });
+    if (!errors.isEmpty()) {
+      res.render('pet_form', {
+        title: 'Update pet',
+        pet: pet,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      await Pet.findByIdAndUpdate(req.params.id, pet, {});
+      res.redirect('/inventory/pets');
+    }
+  }),
+];
 
 //DELETE
 exports.pet_delete_get = asynchandler(async (req, res) => {
-  res.send(`NOT IMPLEMENTED: Pet Delete GET ${req.params.id}`);
+  const pet = await Pet.findById(req.params.id).exec();
+  const allItems = await Item.find({ pet: req.params.id }).exec();
+
+  res.render('pet_delete', {
+    title: 'Delete Pet',
+    pet: pet,
+    item_list: allItems,
+  });
 });
 
 exports.pet_delete_post = asynchandler(async (req, res) => {
-  res.send(`NOT IMPLEMENTED: Pet Delete POST ${req.params.id}`);
+  await Pet.findByIdAndDelete(req.params.id);
+  res.redirect('/inventory/pets');
 });

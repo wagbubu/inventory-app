@@ -1,0 +1,24 @@
+<div>
+  <h1><%= title %></h1>
+  <% if(item_list.length === 0) { %>
+  <h2>Are you sure do you want to delete "<%= pet.name %>"</h2>
+  <form method="POST">
+    <input type="hidden" name="pet" id="pet" value="<%=pet._id%>" />
+    <button type="submit" class="btn delete">Confirm Delete</button>
+  </form>
+  <% } else { %>
+  <h2>Cannot Delete Pet</h2>
+  <p>
+    Please Delete the following associated Items before deleting <%=pet.name%>
+  </p>
+  <ul>
+    <% for(let item of item_list) { %>
+    <li>
+      <p>
+        <a href="/inventory/item/<%= item._id %>"><%= item.name %></a>
+      </p>
+    </li>
+    <% } %>
+  </ul>
+  <% } %>
+</div>
