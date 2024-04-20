@@ -10,17 +10,12 @@
       <p><strong>In Stock: <%=item.number_in_stock%> pcs.</strong></p>
     </div>
     <div class="buttons-container">
-      <p>
-        <a href="/inventory/item/<%=item._id%>/update" class="btn"
-          >Update Product</a
-        >
-      </p>
-
-      <p>
-        <a href="/inventory/item/<%=item._id%>/delete" class="btn delete"
-          >Delete Product</a
-        >
-      </p>
+      <a href="/inventory/item/<%=item._id%>/update"
+        ><button class="btn">Update Product</button>
+      </a>
+      <a href="/inventory/item/<%=item._id%>/delete">
+        <button class="btn delete">Delete Product</button>
+      </a>
     </div>
   </div>
 </div>

@@ -21,14 +21,23 @@ exports.item_create_post = [
     .trim()
     .isLength({ min: 2 })
     .escape(),
-  body('description').trim().isLength({ min: 1 }).escape(),
-  body('category').trim().isLength({ min: 1 }).escape(),
-  body('pet').trim().isLength({ min: 1 }).escape(),
+  body('description', 'Description must contain atleast 5 characters')
+    .trim()
+    .isLength({ min: 5 })
+    .escape(),
+  body('category', 'Category must contain atleast 3 characters')
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  body('pet', 'Pet must contain atleast 2 characters')
+    .trim()
+    .isLength({ min: 2 })
+    .escape(),
   body('price')
     .trim()
     .custom((value) => {
       if (Number(value) < 0) {
-        throw new Error('Value must be greater than zero');
+        throw new Error('Price must be greater than zero');
       }
       return true;
     })
@@ -37,7 +46,7 @@ exports.item_create_post = [
     .trim()
     .custom((value) => {
       if (Number(value) < 0) {
-        throw new Error('Value must be greater than zero');
+        throw new Error('Quantity must be greater than zero');
       }
       return true;
     })
@@ -76,8 +85,13 @@ exports.item_create_post = [
   }),
 ];
 
-exports.item_detail = asynchandler(async (req, res) => {
+exports.item_detail = asynchandler(async (req, res, next) => {
   const itemDetail = await Item.findById(req.params.id).exec();
+  if (itemDetail === null) {
+    const err = new Error('Item not found!');
+    err.status = 404;
+    return next(err);
+  }
   res.render('item_detail', {
     title: 'Item Detail',
     item: itemDetail,
@@ -128,10 +142,19 @@ exports.item_list = asynchandler(async (req, res, next) => {
 });
 
 //UPDATE
-exports.item_update_get = asynchandler(async (req, res) => {
-  const allPets = await Pet.find().exec();
-  const allCategory = await Category.find().exec();
-  const item = await Item.findOne({ _id: req.params.id }).exec();
+exports.item_update_get = asynchandler(async (req, res, next) => {
+  const [allPets, allCategory, item] = await Promise.all([
+    await Pet.find().exec(),
+    await Category.find().exec(),
+    await Item.findById(req.params.id).exec(),
+  ]);
+
+  if (item === null) {
+    // No results.
+    const err = new Error('Item not found');
+    err.status = 404;
+    return next(err);
+  }
 
   allPets.forEach((pet) => {
     if (item.pet == pet._id.toString()) {
@@ -226,6 +249,9 @@ exports.item_update_post = [
 //DELETE
 exports.item_delete_get = asynchandler(async (req, res) => {
   const item = await Item.findById(req.params.id).exec();
+  if (item === null) {
+    res.redirect('/inventory/');
+  }
   res.render('item_delete', {
     title: `Delete Item ID: ${item._id}`,
     item: item,

@@ -52,8 +52,14 @@ exports.category_list = asynchandler(async (req, res) => {
 });
 
 //UPDATE
-exports.category_update_get = asynchandler(async (req, res) => {
+exports.category_update_get = asynchandler(async (req, res, next) => {
   const category = await Category.findById(req.params.id).exec();
+  if (category === null) {
+    // No results.
+    const err = new Error('Category not found');
+    err.status = 404;
+    return next(err);
+  }
   res.render('category_form', {
     title: 'Update category',
     category: category,
@@ -92,6 +98,10 @@ exports.category_delete_get = asynchandler(async (req, res) => {
     await Item.find({ category: req.params.id }),
     await Category.findById(req.params.id),
   ]);
+  if (category === null) {
+    // No results.
+    res.redirect('/inventory/categories')
+  }
 
   res.render('category_delete', {
     title: 'Delete category',

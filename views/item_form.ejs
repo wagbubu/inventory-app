@@ -53,4 +53,11 @@
     />
     <button type="submit" class="btn">Save</button>
   </form>
+  <% if (typeof errors !== 'undefined') { %>
+  <ul>
+    <% for ( let error of errors) {%>
+    <li style="color: rgb(172, 0, 0)"><%= error.msg %></li>
+    <% } %>
+  </ul>
+  <% } %>
 </div>

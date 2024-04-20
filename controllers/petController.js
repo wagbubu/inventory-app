@@ -11,7 +11,7 @@ exports.pet_create_get = asynchandler(async (req, res) => {
 });
 
 exports.pet_create_post = [
-  body('name', 'Pet name most contain atleast 2 characters')
+  body('name', 'Pet name must contain atleast 2 characters')
     .trim()
     .isLength({ min: 2 })
     .escape(),
@@ -51,8 +51,14 @@ exports.pet_list = asynchandler(async (req, res) => {
 });
 
 //UPDATE
-exports.pet_update_get = asynchandler(async (req, res) => {
+exports.pet_update_get = asynchandler(async (req, res, next) => {
   const pet = await Pet.findById(req.params.id).exec();
+  if (Pet === null) {
+    // No results.
+    const err = new Error('Pet not found');
+    err.status = 404;
+    return next(err);
+  }
   res.render('pet_form', {
     title: 'Update pet',
     pet: pet,
@@ -83,8 +89,14 @@ exports.pet_update_post = [
 
 //DELETE
 exports.pet_delete_get = asynchandler(async (req, res) => {
-  const pet = await Pet.findById(req.params.id).exec();
-  const allItems = await Item.find({ pet: req.params.id }).exec();
+  const [pet, allItems] = await Promise.all([
+    Pet.findById(req.params.id).exec(),
+    Item.find({ pet: req.params.id }).exec(),
+  ]);
+  if (pet === null) {
+    // No results.
+    res.redirect('/inventory/pets');
+  }
 
   res.render('pet_delete', {
     title: 'Delete Pet',
